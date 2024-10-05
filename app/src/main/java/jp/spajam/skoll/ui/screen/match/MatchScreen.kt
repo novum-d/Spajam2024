@@ -13,11 +13,12 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -38,26 +39,43 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import jp.spajam.skoll.R
 import jp.spajam.skoll.ui.theme.Spajam2024Theme
 import kotlinx.coroutines.delay
 
-val initOvalVisible = List(OvalRes.entries.size) { false }
+val quicklyOvalVisible: List<Boolean?> = List(OvalRes.entries.size) { false }
+val normalOvalVisible : List<Boolean?> = List(OvalRes.entries.size) { if(it < 1) null else false }
+val slowlyOvalVisible = List(OvalRes.entries.size) { if(it < 2) null else false }
 
 @Composable
 fun MatchScreen(
+    popBack: () -> Unit,
     hashTags: List<String> = listOf("Snow Bowl", "SQS", "Event Bridge"),
 ) {
-    val (ovalVisible, updateOvalVisible) = remember { mutableStateOf(initOvalVisible) }
+    val (ovalVisible, updateOvalVisible) = remember { mutableStateOf(quicklyOvalVisible) }
+    val (hashTagFlags, updateHashTagFlags) = remember { mutableStateOf(List(hashTags.size) { true }) }
 
     LaunchedEffect(ovalVisible) {
-        val i = ovalVisible.indexOfFirst { it.not() }
+        val hashTagFlagSize = hashTagFlags.filter { it }.size
+
+        val i = ovalVisible.indexOfFirst { it == false }
         val mutList = if (i != -1) {
             ovalVisible.toMutableList().also { it[i] = true }
         } else {
-            initOvalVisible.toMutableList()
+            when (hashTagFlagSize) {
+                1 -> quicklyOvalVisible
+                2 -> normalOvalVisible
+                else -> slowlyOvalVisible
+            }
         }
-        delay(200)
+
+        val delayMills = when (hashTagFlagSize) {
+            1 -> 100
+            2 -> 300
+            else -> 500
+        }
+        delay(delayMills.toLong())
         updateOvalVisible(mutList)
     }
 
@@ -69,7 +87,12 @@ fun MatchScreen(
             modifier = Modifier.fillMaxSize(),
         )
 
-        IconButton({}, modifier = Modifier.align(Alignment.TopStart)) {
+        IconButton(
+            onClick = popBack,
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(start = 4.dp, top = 32.dp)
+        ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = null,
@@ -83,8 +106,10 @@ fun MatchScreen(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 contentAlignment = Alignment.Center,
             ) {
-                ovalVisible.zip(OvalRes.entries.reversed()).forEach { (ovalVisible, ovalRes) ->
-                    Oval(ovalVisible, ovalRes)
+                ovalVisible.zip(OvalRes.entries).forEach { (ovalVisible, ovalRes) ->
+                    ovalVisible?.let {
+                        Oval(it, ovalRes)
+                    }
                 }
             }
 
@@ -95,15 +120,20 @@ fun MatchScreen(
             contentPadding = PaddingValues(start = 24.dp, bottom = 24.dp),
             modifier = Modifier.align(Alignment.BottomStart),
         ) {
-            items(hashTags) {
+            itemsIndexed(items = hashTags.zip(hashTagFlags)) { i, (title, checked) ->
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Switch(
-                        false, {}, modifier = Modifier
+                        checked = checked,
+                        onCheckedChange = {
+                            val mutList = hashTagFlags.toMutableList().also { it[i] = checked.not() }
+                            updateHashTagFlags(mutList)
+                        },
+                        modifier = Modifier
                             .scale(0.5F)
                             .size(24.dp)
                     )
                     Spacer(Modifier.width(9.dp))
-                    Text("# $it")
+                    Text("# $title")
                 }
             }
         }
@@ -119,6 +149,9 @@ fun Oval(
         ovalVisible,
         enter = fadeIn(),
         exit = fadeOut(),
+        modifier = Modifier
+            .size(OvalRes.Three.size.dp)
+            .zIndex(-(ovalRes.ordinal).toFloat())
     ) {
         Box(
             modifier = Modifier
@@ -151,7 +184,7 @@ const val inc = 120
 @Composable
 fun MatchScreenPreview() {
     Spajam2024Theme {
-        MatchScreen()
+        MatchScreen({})
     }
 }
 

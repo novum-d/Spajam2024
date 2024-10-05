@@ -7,6 +7,8 @@ import androidx.navigation.compose.composable
 const val MATCH_ROUTE = "match_route"
 
 fun NavController.goToMatch() = navigate(MATCH_ROUTE)
-fun NavGraphBuilder.matchScreen() = composable(MATCH_ROUTE) {
-    MatchScreen()
+fun NavGraphBuilder.matchScreen(
+    popBack: () -> Unit,
+) = composable(MATCH_ROUTE) {
+    MatchScreen(popBack)
 }

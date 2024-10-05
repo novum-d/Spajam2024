@@ -26,5 +26,7 @@ fun NavGraph(
         goToMatchScreen = navController::goToMatch,
         popBack = navController::popBackStack,
     )
-    matchScreen()
+    matchScreen(
+        popBack = navController::popBackStack,
+    )
 }
