@@ -1,0 +1,37 @@
+package jp.spajam.skoll.ui.screen.idSearch
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import jp.spajam.skoll.ui.theme.Spajam2024Theme
+
+@Composable
+fun IdSearchScreen(
+    goToTagChooseScreen: () -> Unit,
+    modifier: Modifier = Modifier,
+) = Column(
+    modifier = Modifier
+        .fillMaxSize()
+        .then(modifier),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally
+) {
+    Text("イベントID検索画面")
+    Button(onClick = goToTagChooseScreen) {
+        Text("next")
+    }
+}
+
+@Preview
+@Composable
+private fun IdSearchScreenPreview() {
+    Spajam2024Theme {
+        IdSearchScreen(goToTagChooseScreen = {})
+    }
+}
