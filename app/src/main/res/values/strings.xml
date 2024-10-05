@@ -2,5 +2,10 @@
     <string name="app_name">Spajam2024</string>
     <string name="id_search_title">参加</string>
     <string name="id_search_event_id">イベントID</string>
-    <string name="id_search_start">START</string>
+    <string name="id_search_start">始める</string>
+    <string name="tag_choose_title">キーワード入力</string>
+    <string name="keyword1">キーワード1</string>
+    <string name="keyword2">キーワード2</string>
+    <string name="keyword3">キーワード3</string>
+    <string name="next">次へ</string>
 </resources>

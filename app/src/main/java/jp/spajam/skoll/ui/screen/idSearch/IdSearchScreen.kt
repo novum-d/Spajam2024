@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
@@ -21,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,9 +39,7 @@ fun IdSearchScreen(
     goToTagChooseScreen: () -> Unit,
     modifier: Modifier = Modifier,
 ) = Scaffold(
-    modifier = Modifier
-        .fillMaxSize()
-        .then(modifier),
+    modifier = modifier.fillMaxSize(),
     topBar = {
         TopBar(
             title = stringResource(AppString.id_search_title),
@@ -48,7 +48,7 @@ fun IdSearchScreen(
     },
 ) { innerPadding ->
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)
             .padding(horizontal = 24.dp),
@@ -57,9 +57,9 @@ fun IdSearchScreen(
         var eventId: String by remember { mutableStateOf("") }
 
         Spacer(modifier = Modifier.weight(1f))
-        // TODO: ロゴ配置
         Image(
-            imageVector = ImageVector.vectorResource(AppDrawable.ic_launcher_foreground),
+            modifier = Modifier.size(width = 240.dp, height = 180.dp),
+            painter = painterResource(AppDrawable.logo),
             contentDescription = null
         )
         Spacer(modifier = Modifier.weight(1f))
