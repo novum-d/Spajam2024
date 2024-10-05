@@ -1,4 +1,4 @@
-package jp.spajam.skoll.page
+package jp.spajam.skoll.ui.screen.sparkly
 
 import androidx.annotation.ColorInt
 import androidx.compose.animation.AnimatedVisibility
@@ -19,6 +19,10 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -57,15 +61,23 @@ fun SparklyPage(
         updateOvalVisible(mutList)
     }
 
-    Box(modifier = Modifier.fillMaxSize()){
+    Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(R.drawable.sparkly_background),
             contentDescription = null,
             contentScale = ContentScale.FillWidth,
             modifier = Modifier.fillMaxSize(),
         )
+
+        IconButton({}, modifier = Modifier.align(Alignment.TopStart)) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = null,
+            )
+        }
+
         Column(modifier = Modifier.fillMaxSize()) {
-            Spacer(Modifier.weight(1f))
+            Spacer(Modifier.weight(0.35f))
 
             Box(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -76,19 +88,22 @@ fun SparklyPage(
                 }
             }
 
-            Spacer(Modifier.weight(1f))
+            Spacer(Modifier.weight(0.65f))
+        }
 
-            LazyColumn(contentPadding = PaddingValues(start = 24.dp, bottom = 24.dp)) {
-                items(hashTags) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Switch(
-                            false, {}, modifier = Modifier
-                                .scale(0.5F)
-                                .size(24.dp)
-                        )
-                        Spacer(Modifier.width(9.dp))
-                        Text("# $it")
-                    }
+        LazyColumn(
+            contentPadding = PaddingValues(start = 24.dp, bottom = 24.dp),
+            modifier = Modifier.align(Alignment.BottomStart),
+        ) {
+            items(hashTags) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Switch(
+                        false, {}, modifier = Modifier
+                            .scale(0.5F)
+                            .size(24.dp)
+                    )
+                    Spacer(Modifier.width(9.dp))
+                    Text("# $it")
                 }
             }
         }
@@ -139,3 +154,4 @@ fun SparklyPagePreview() {
         SparklyPage()
     }
 }
+
