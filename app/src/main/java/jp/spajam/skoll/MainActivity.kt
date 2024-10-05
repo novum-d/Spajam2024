@@ -41,6 +41,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// TODO: 削除 
 @Composable
 fun EventIdSearchPage() {
     Column(
