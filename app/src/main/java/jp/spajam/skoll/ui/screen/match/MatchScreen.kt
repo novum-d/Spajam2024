@@ -53,7 +53,7 @@ fun MatchScreen(
     popBack: () -> Unit,
     hashTags: List<String> = listOf("Snow Bowl", "SQS", "Event Bridge"),
 ) {
-    val (ovalVisible, updateOvalVisible) = remember { mutableStateOf(quicklyOvalVisible) }
+    val (ovalVisible, updateOvalVisible) = remember { mutableStateOf(slowlyOvalVisible) }
     val (hashTagFlags, updateHashTagFlags) = remember { mutableStateOf(List(hashTags.size) { true }) }
 
     LaunchedEffect(ovalVisible) {
