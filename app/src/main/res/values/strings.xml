@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Spajam2024</string>
+    <string name="id_search_title">参加</string>
+    <string name="id_search_event_id">イベントID</string>
+    <string name="id_search_start">START</string>
 </resources>
