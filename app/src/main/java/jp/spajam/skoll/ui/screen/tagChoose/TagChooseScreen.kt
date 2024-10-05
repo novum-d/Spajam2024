@@ -119,7 +119,7 @@ fun TagChooseScreen(
             onClick = goToMatchScreen,
             colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
         ) {
-            Text(stringResource(AppString.id_search_event_id))
+            Text(stringResource(AppString.next))
         }
         Spacer(modifier = Modifier.height(24.dp))
     }
