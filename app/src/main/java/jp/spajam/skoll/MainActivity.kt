@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,7 +16,6 @@ import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -25,6 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
+import jp.spajam.skoll.ui.navigation.NavGraph
 import jp.spajam.skoll.ui.theme.Spajam2024Theme
 
 class MainActivity : ComponentActivity() {
@@ -34,12 +34,17 @@ class MainActivity : ComponentActivity() {
         setContent {
             Spajam2024Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Text("", modifier = Modifier.padding(innerPadding))
+                    val navController = rememberNavController()
+                    NavGraph(
+                        modifier = Modifier.padding(innerPadding),
+                        navController = navController,
+                    )
                 }
             }
         }
     }
 }
+
 
 @Composable
 fun EventIdSearchPage() {
