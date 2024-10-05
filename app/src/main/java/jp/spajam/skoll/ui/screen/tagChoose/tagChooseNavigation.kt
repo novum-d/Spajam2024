@@ -7,6 +7,9 @@ import androidx.navigation.compose.composable
 const val TAG_CHOOSE_ROUTE = "tag_choose_route"
 
 fun NavController.goToTagChoose() = navigate(TAG_CHOOSE_ROUTE)
-fun NavGraphBuilder.tagChooseScreen(goToMatchScreen: () -> Unit) = composable(TAG_CHOOSE_ROUTE) {
-    TagChooseScreen(goToMatchScreen)
+fun NavGraphBuilder.tagChooseScreen(
+    goToMatchScreen: () -> Unit,
+    popBack: () -> Unit,
+) = composable(TAG_CHOOSE_ROUTE) {
+    TagChooseScreen(goToMatchScreen = goToMatchScreen, popBack = popBack)
 }

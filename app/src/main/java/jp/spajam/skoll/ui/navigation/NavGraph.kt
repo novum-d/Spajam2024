@@ -22,6 +22,9 @@ fun NavGraph(
     startDestination = startDestination,
 ) {
     idSearchScreen(navController::goToTagChoose)
-    tagChooseScreen(navController::goToMatch)
+    tagChooseScreen(
+        goToMatchScreen = navController::goToMatch,
+        popBack = navController::popBackStack,
+    )
     matchScreen()
 }
