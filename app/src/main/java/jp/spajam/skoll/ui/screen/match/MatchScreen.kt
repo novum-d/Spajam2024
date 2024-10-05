@@ -45,8 +45,9 @@ import jp.spajam.skoll.ui.theme.Spajam2024Theme
 import kotlinx.coroutines.delay
 
 val quicklyOvalVisible: List<Boolean?> = List(OvalRes.entries.size) { false }
-val normalOvalVisible : List<Boolean?> = List(OvalRes.entries.size) { if(it < 1) null else false }
-val slowlyOvalVisible = List(OvalRes.entries.size) { if(it < 2) null else false }
+val normalOvalVisible: List<Boolean?> = List(OvalRes.entries.size) { if (it < 1) null else false }
+val slowlyOvalVisible = List(OvalRes.entries.size) { if (it < 2) null else false }
+val noActionOvalVisible = List(OvalRes.entries.size) { null }
 
 @Composable
 fun MatchScreen(
@@ -64,6 +65,7 @@ fun MatchScreen(
             ovalVisible.toMutableList().also { it[i] = true }
         } else {
             when (hashTagFlagSize) {
+                0 -> noActionOvalVisible
                 1 -> quicklyOvalVisible
                 2 -> normalOvalVisible
                 else -> slowlyOvalVisible
@@ -71,6 +73,7 @@ fun MatchScreen(
         }
 
         val delayMills = when (hashTagFlagSize) {
+            0 -> 50
             1 -> 100
             2 -> 300
             else -> 500
@@ -127,6 +130,10 @@ fun MatchScreen(
                         onCheckedChange = {
                             val mutList = hashTagFlags.toMutableList().also { it[i] = checked.not() }
                             updateHashTagFlags(mutList)
+
+                            if(ovalVisible.filterNotNull().isEmpty() && hashTagFlags.any { true }){
+                                updateOvalVisible(quicklyOvalVisible)
+                            }
                         },
                         modifier = Modifier
                             .scale(0.5F)
