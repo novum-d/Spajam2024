@@ -40,6 +40,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import jp.spajam.skoll.KeywordData
+import jp.spajam.skoll.KeywordItem
 import jp.spajam.skoll.R
 import jp.spajam.skoll.ui.theme.Spajam2024Theme
 import kotlinx.coroutines.delay
@@ -52,7 +54,11 @@ val noActionOvalVisible = List(OvalRes.entries.size) { null }
 @Composable
 fun MatchScreen(
     popBack: () -> Unit,
-    hashTags: List<String> = listOf("kotlin", "android", "compose"),
+    hashTags: List<KeywordItem> = listOf(
+        KeywordData.keywordData1,
+        KeywordData.keywordData2,
+        KeywordData.keywordData3,
+    ),
 ) {
     val (ovalVisible, updateOvalVisible) = remember { mutableStateOf(slowlyOvalVisible) }
     val (hashTagFlags, updateHashTagFlags) = remember { mutableStateOf(List(hashTags.size) { true }) }
@@ -123,24 +129,27 @@ fun MatchScreen(
             contentPadding = PaddingValues(start = 24.dp, bottom = 24.dp),
             modifier = Modifier.align(Alignment.BottomStart),
         ) {
-            itemsIndexed(items = hashTags.zip(hashTagFlags)) { i, (title, checked) ->
+            itemsIndexed(items = hashTags.zip(hashTagFlags)) { i, (item, checked) ->
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Switch(
                         checked = checked,
                         onCheckedChange = {
-                            val mutList = hashTagFlags.toMutableList().also { it[i] = checked.not() }
+                            val mutList =
+                                hashTagFlags.toMutableList().also { it[i] = checked.not() }
                             updateHashTagFlags(mutList)
 
-                            if(ovalVisible.filterNotNull().isEmpty() && hashTagFlags.any { true }){
+                            if (ovalVisible.filterNotNull()
+                                    .isEmpty() && hashTagFlags.any { true }
+                            ) {
                                 updateOvalVisible(quicklyOvalVisible)
                             }
                         },
                         modifier = Modifier
                             .scale(0.5F)
-                            .size(24.dp)
+                            .size(40.dp)
                     )
                     Spacer(Modifier.width(9.dp))
-                    Text("# $title")
+                    Text(item.keyword)
                 }
             }
         }

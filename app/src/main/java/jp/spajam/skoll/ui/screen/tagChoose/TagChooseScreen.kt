@@ -20,35 +20,37 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import jp.spajam.skoll.KeywordData
+import jp.spajam.skoll.KeywordItem
 import jp.spajam.skoll.ui.composable.DropdownMenu
 import jp.spajam.skoll.ui.composable.TopBar
 import jp.spajam.skoll.ui.theme.AppDrawable
 import jp.spajam.skoll.ui.theme.AppString
+import jp.spajam.skoll.ui.theme.Pink80
 import jp.spajam.skoll.ui.theme.PrimaryBlue
+import jp.spajam.skoll.ui.theme.Purple80
 import jp.spajam.skoll.ui.theme.Spajam2024Theme
 
 data class PickKeywordState(
     val keyword: String = " ",
+    val index: Int = 0,
     val expanded: Boolean = false,
 )
 
 private val demoList = listOf(
-    "# kotlin",
-    "# android",
-    "# compose",
-    "# swift",
-    "# swiftUI",
-    "# UIKit",
-    "# XCode",
-    "# Flutter",
-    "# KMP",
+    KeywordItem("# kotlin", Color.Blue),
+    KeywordItem("# android", Color.Red),
+    KeywordItem("# compose", Color.Yellow),
+    KeywordItem("# swift", Color.Yellow),
+    KeywordItem("# swiftUI", Pink80),
+    KeywordItem("# XCode", Purple80),
 )
 
 @Composable
@@ -100,6 +102,7 @@ fun TagChooseScreen(
             keyword = firstPickState.keyword,
             expanded = firstPickState.expanded,
             menuItems = demoList,
+            onIndexChange = { firstPickState = firstPickState.copy(index = it) },
             onExpanded = { firstPickState = firstPickState.copy(expanded = it) },
             onKeywordChange = { firstPickState = firstPickState.copy(keyword = it) },
         )
@@ -110,6 +113,7 @@ fun TagChooseScreen(
             keyword = secondPickState.keyword,
             expanded = secondPickState.expanded,
             menuItems = demoList,
+            onIndexChange = { secondPickState = secondPickState.copy(index = it) },
             onExpanded = { secondPickState = secondPickState.copy(expanded = it) },
             onKeywordChange = { secondPickState = secondPickState.copy(keyword = it) },
         )
@@ -120,6 +124,7 @@ fun TagChooseScreen(
             keyword = thirdPickState.keyword,
             expanded = thirdPickState.expanded,
             menuItems = demoList,
+            onIndexChange = { thirdPickState = thirdPickState.copy(index = it) },
             onExpanded = { thirdPickState = thirdPickState.copy(expanded = it) },
             onKeywordChange = { thirdPickState = thirdPickState.copy(keyword = it) },
         )
@@ -127,7 +132,14 @@ fun TagChooseScreen(
         Button(
             modifier = Modifier
                 .fillMaxWidth(),
-            onClick = goToMatchScreen,
+            onClick = {
+                KeywordData.saveKeywordData(
+                    demoList[firstPickState.index],
+                    demoList[secondPickState.index],
+                    demoList[thirdPickState.index]
+                )
+                goToMatchScreen()
+            },
             enabled = firstPickState.keyword.isNotBlank() && secondPickState.keyword.isNotBlank() && thirdPickState.keyword.isNotBlank(),
             colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
         ) {
