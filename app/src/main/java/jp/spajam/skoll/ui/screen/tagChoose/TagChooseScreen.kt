@@ -90,6 +90,7 @@ fun TagChooseScreen(
         Spacer(modifier = Modifier.height(58.dp))
         DropdownMenu(
             title = stringResource(AppString.keyword1),
+            menuHeight = 200.dp,
             keyword = firstPickState.keyword,
             expanded = firstPickState.expanded,
             menuItems = demoList,
@@ -98,6 +99,7 @@ fun TagChooseScreen(
         )
         DropdownMenu(
             title = stringResource(AppString.keyword2),
+            menuHeight = 170.dp,
             keyword = secondPickState.keyword,
             expanded = secondPickState.expanded,
             menuItems = demoList,
@@ -106,6 +108,7 @@ fun TagChooseScreen(
         )
         DropdownMenu(
             title = stringResource(AppString.keyword3),
+            menuHeight = 120.dp,
             keyword = thirdPickState.keyword,
             expanded = thirdPickState.expanded,
             menuItems = demoList,
