@@ -184,7 +184,6 @@ fun Oval(
     }
 }
 
-// TODO: 色が固定になっている、タグ選択画面で保存されるシングルトンデータで色を変える 
 enum class OvalRes(
     val size: Int, // dp
     @ColorInt val colorRes: Long,

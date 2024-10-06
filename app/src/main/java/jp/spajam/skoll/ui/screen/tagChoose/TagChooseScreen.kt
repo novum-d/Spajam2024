@@ -33,7 +33,9 @@ import jp.spajam.skoll.ui.composable.DropdownMenu
 import jp.spajam.skoll.ui.composable.TopBar
 import jp.spajam.skoll.ui.theme.AppDrawable
 import jp.spajam.skoll.ui.theme.AppString
+import jp.spajam.skoll.ui.theme.Pink80
 import jp.spajam.skoll.ui.theme.PrimaryBlue
+import jp.spajam.skoll.ui.theme.Purple80
 import jp.spajam.skoll.ui.theme.Spajam2024Theme
 
 data class PickKeywordState(
@@ -47,11 +49,8 @@ private val demoList = listOf(
     KeywordItem("# android", Color.Red),
     KeywordItem("# compose", Color.Yellow),
     KeywordItem("# swift", Color.Yellow),
-//    "# swiftUI",
-//    "# UIKit",
-//    "# XCode",
-//    "# Flutter",
-//    "# KMP",
+    KeywordItem("# swiftUI", Pink80),
+    KeywordItem("# XCode", Purple80),
 )
 
 @Composable
