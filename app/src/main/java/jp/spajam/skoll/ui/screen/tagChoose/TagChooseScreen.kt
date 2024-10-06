@@ -12,6 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.spajam.skoll.ui.composable.DropdownMenu
@@ -71,7 +73,6 @@ fun TagChooseScreen(
             .padding(innerPadding)
             .padding(horizontal = 24.dp)
             .then(modifier),
-        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         var firstPickState: PickKeywordState by remember { mutableStateOf(PickKeywordState()) }
         var secondPickState: PickKeywordState by remember { mutableStateOf(PickKeywordState()) }
@@ -88,7 +89,12 @@ fun TagChooseScreen(
             contentDescription = null
         )
         Spacer(modifier = Modifier.height(58.dp))
+        Text(
+            text = stringResource(AppString.keyword_that_describe_you),
+            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold)
+        )
         DropdownMenu(
+            modifier = Modifier.fillMaxWidth(),
             title = stringResource(AppString.keyword1),
             menuHeight = 200.dp,
             keyword = firstPickState.keyword,
@@ -98,6 +104,7 @@ fun TagChooseScreen(
             onKeywordChange = { firstPickState = firstPickState.copy(keyword = it) },
         )
         DropdownMenu(
+            modifier = Modifier.fillMaxWidth(),
             title = stringResource(AppString.keyword2),
             menuHeight = 170.dp,
             keyword = secondPickState.keyword,
@@ -107,6 +114,7 @@ fun TagChooseScreen(
             onKeywordChange = { secondPickState = secondPickState.copy(keyword = it) },
         )
         DropdownMenu(
+            modifier = Modifier.fillMaxWidth(),
             title = stringResource(AppString.keyword3),
             menuHeight = 120.dp,
             keyword = thirdPickState.keyword,
@@ -120,6 +128,7 @@ fun TagChooseScreen(
             modifier = Modifier
                 .fillMaxWidth(),
             onClick = goToMatchScreen,
+            enabled = firstPickState.keyword.isNotBlank() && secondPickState.keyword.isNotBlank() && thirdPickState.keyword.isNotBlank(),
             colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue),
         ) {
             Text(stringResource(AppString.next))
