@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import jp.spajam.skoll.KeywordItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,9 +21,10 @@ fun DropdownMenu(
     title: String,
     keyword: String,
     expanded: Boolean,
-    menuItems: List<String>,
+    menuItems: List<KeywordItem>,
     onExpanded: (Boolean) -> Unit,
     onKeywordChange: (String) -> Unit,
+    onIndexChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
     menuHeight: Dp? = null,
 ) = ExposedDropdownMenuBox(
@@ -47,12 +49,13 @@ fun DropdownMenu(
         expanded = expanded,
         onDismissRequest = { onExpanded(false) },
     ) {
-        menuItems.forEach { value ->
+        menuItems.forEachIndexed { index, data ->
             DropdownMenuItem(
-                text = { Text(text = value) },
+                text = { Text(text = data.keyword) },
                 onClick = {
                     onExpanded(false)
-                    onKeywordChange(value)
+                    onIndexChange(index)
+                    onKeywordChange(data.keyword)
                 }
             )
         }
@@ -66,12 +69,8 @@ private fun DropdownMenuPreview() = DropdownMenu(
     title = "タイトル",
     keyword = "",
     expanded = true,
-    menuItems = listOf(
-        "item1",
-        "item2",
-        "item3",
-        "item4",
-    ),
+    menuItems = listOf(),
     onExpanded = {},
+    onIndexChange = {},
     onKeywordChange = {},
 )
