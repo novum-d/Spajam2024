@@ -3,6 +3,7 @@ package jp.spajam.skoll.ui.screen.idSearch
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,10 +22,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jp.spajam.skoll.ui.composable.TopBar
@@ -55,11 +54,15 @@ fun IdSearchScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         var eventId: String by remember { mutableStateOf("") }
+        val logoPainter = painterResource(AppDrawable.logo)
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(24.dp))
         Image(
-            modifier = Modifier.size(width = 240.dp, height = 180.dp),
-            painter = painterResource(AppDrawable.logo),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 50.dp)
+                .aspectRatio(logoPainter.intrinsicSize.width / logoPainter.intrinsicSize.height),
+            painter = logoPainter,
             contentDescription = null
         )
         Spacer(modifier = Modifier.weight(1f))

@@ -52,7 +52,7 @@ val noActionOvalVisible = List(OvalRes.entries.size) { null }
 @Composable
 fun MatchScreen(
     popBack: () -> Unit,
-    hashTags: List<String> = listOf("Snow Bowl", "SQS", "Event Bridge"),
+    hashTags: List<String> = listOf("kotlin", "android", "compose"),
 ) {
     val (ovalVisible, updateOvalVisible) = remember { mutableStateOf(slowlyOvalVisible) }
     val (hashTagFlags, updateHashTagFlags) = remember { mutableStateOf(List(hashTags.size) { true }) }
